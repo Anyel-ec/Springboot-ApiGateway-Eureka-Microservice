@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+  microservice-product:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: microservice-product:latest
+    container_name: microservice-product
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://microservice-product-db:3306/microservice_client
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: anyel
+    depends_on:
+      - microservice-product-db
+    networks:
+      - spring-boot-network
+
+  microservice-product-db:
+    image: mysql:8.0
+    container_name: microservice-product-db
+    environment:
+      MYSQL_ROOT_PASSWORD: anyel
+      MYSQL_DATABASE: microservice_client
+    ports:
+      - "3306:3306"
+    networks:
+      - spring-boot-network
+
+  microservice-client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: microservice-client:latest
+    container_name: microservice-client
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://microservice-client-db:3306/microservice_product
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: anyel
+    depends_on:
+      - microservice-client-db
+    networks:
+      - spring-boot-network
+
+  microservice-client-db:
+    image: mysql:8.0
+    container_name: microservice-client-db
+    environment:
+      MYSQL_ROOT_PASSWORD: anyel
+      MYSQL_DATABASE: microservice_product
+    ports:
+      - "3307:3306"
+    networks:
+      - spring-boot-network
+
+networks:
+  spring-boot-network:
