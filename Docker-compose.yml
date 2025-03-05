@@ -1,8 +1,9 @@
 version: '3.8'
 services:
+
   microservice-product:
     build:
-      context: .
+      context: ./MicroserviceProduct
       dockerfile: Dockerfile
     image: microservice-product:latest
     container_name: microservice-product
@@ -30,7 +31,7 @@ services:
 
   microservice-client:
     build:
-      context: .
+      context: ./MicroserviceClient
       dockerfile: Dockerfile
     image: microservice-client:latest
     container_name: microservice-client

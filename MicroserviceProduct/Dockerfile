@@ -5,11 +5,11 @@ FROM openjdk:17-jdk-alpine
 WORKDIR /app
 
 # Copy the JAR file and the Docker Compose files
-COPY target/product-0.0.1-SNAPSHOT app-product.jar
+COPY target/app.jar app-product.jar
 
 
 # Expose the port
-EXPOSE 8081
+EXPOSE 8080
 
 # Run the backend
 ENTRYPOINT ["java", "-jar", "app-product.jar"]
